@@ -2,6 +2,8 @@ from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from decouple import config
 
+import logging
+
 TOKEN = config("TOKEN")
 bot = Bot(TOKEN)
 dp = Dispatcher(bot=bot)
@@ -61,5 +63,21 @@ async def photo_1(message: types.Message):
     await bot.send_photo(message.from_user.id, photo=photo)
 
 
+@dp.message_handler()
+async def echo(message: types.Message):
+    if message.text.isnumeric():
+        await bot.send_message(message.from_user.id, int(message.text)**2)
+    else:
+        await bot.send_message(message.from_user.id, message.text)
+
+
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     executor.start_polling(dp, skip_updates=True)
+
+
+
+
+
+
+
