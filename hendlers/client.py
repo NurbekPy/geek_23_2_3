@@ -32,7 +32,7 @@ async def photo_1(message: types.Message):
     await bot.send_photo(message.from_user.id, photo=photo)
 
 async def pin_1(message: types.Message):
-    if message.reply('!pin'):
+    if message.reply_('!pin'):
         await bot.pin_chat_message(message.chat.id, message.message_id)
 
 
