@@ -29,7 +29,6 @@ async def load_mentor_id(message: types.Message, state: FSMContext):
 
 async def load_name(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        data['username'] = f'@{message.from_user.username}'
         data['name'] = message.text
     await FSMAdmin.next()
     await message.answer('Укажите возраст.')

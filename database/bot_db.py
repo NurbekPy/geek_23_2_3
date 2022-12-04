@@ -13,7 +13,7 @@ def sql_create():
                'age INTEGER, napravlenie TEXT, crew INTEGER)')
     db.commit()
 
-штш
+
 
 async def sql_command_insert(state):
     async with state.proxy() as data:
