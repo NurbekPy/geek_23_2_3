@@ -3,6 +3,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from config import bot
+from database.bot_db import sql_command_insert
 
 class FSMAdmin(StatesGroup):
     mentor_id = State()
@@ -61,11 +62,11 @@ async def load_crew(message: types.Message, state: FSMContext):
                                f"{data['mentor_id']}\n{data['name']}\n{data['age']})"
                                f"{data['napravlenie']}\n{data['crew']}")
     await FSMAdmin.next()
-    await message.answer('Проверьте данные')
+    await message.answer('Всё верно?')
 
 async def submit(message: types.Message, state: FSMContext):
     if message.text.lower() == 'да':
-        #запись в базу данных
+        await sql_command_insert(state)
         await state.finish()
         await message.answer('Регистрация окончена')
     elif message.text.lower() == 'нет':
