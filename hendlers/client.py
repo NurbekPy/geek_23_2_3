@@ -2,6 +2,7 @@ from aiogram import Dispatcher, types
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from config import dp, bot
 from asyncio import sleep
+from parser import anime
 
 #@dp.message_handler(commands=['quiz'])
 async def quiz_1(message: types.Message):
@@ -55,8 +56,27 @@ async def start_dice(message: types.Message):
         await bot.send_message(message.from_user.id, 'Ничья!')
 
 
+async def parser_anime(message: types.Message):
+    items = anime.parser()
+    for item in items:
+        await message.answer(
+            f"{item['link']}\n\n"
+            f"{item['title']}\n"
+            f"{item['status']}\n"
+            f"#{item['year']}\n"
+            f"#{item['county']}\n"
+            f"#{item['genre']}\n"
+        )
+
+
+
+
+
+
 def register_handlers_client(dp: Dispatcher):
     dp.register_message_handler(quiz_1, commands=['quiz'])
     dp.register_message_handler(photo_1, commands=['mem'])
     dp.register_message_handler(pin_1, commands=['!pin'])
     dp.register_message_handler(start_dice, commands=['start'])
+    dp.register_message_handler(parser_anime, commands=['anime'])
+
